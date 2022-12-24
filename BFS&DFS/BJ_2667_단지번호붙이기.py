@@ -13,6 +13,9 @@ V = [[False] * N for _ in range(N)]
 total = 1
 each_area = 0
 
+list = [0, 1]
+len(list)
+
 def bfs(r, c):
     global each_area
     each_area += 1
