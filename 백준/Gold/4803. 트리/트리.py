@@ -8,35 +8,28 @@ def findCycle_dfs(start):
     
     # for: start의 인접노드들 확인
     for adj in mat[start]:
-        # # 노드1개 그 자체가 사이클인경우 
-        # if start == adj:
-        #     return False
-
         # if 인접노드가, 부모노드라면 -> continue, 다음 인접정점 검사
         if parent[start] == adj:
             continue
 
         # 부모노드가 아닌데, 방문이력이 있다면 => cycle => return false
         if parent[start] != adj and visited[adj] != 0:
-            return True
+            # return True
+            return False
 
-        # 아직 방문하지 않은 점들
-        # call dfs
-        # if visited[adj] == 0:
+        # 아직 방문하지 않은 점들 # call dfs
         parent[adj] = start
         visited[start] = 1
-        if findCycle_dfs(adj):
-            return True
+
+        # 싸이클리 리턴되오면, False를 리턴
+        if not findCycle_dfs(adj):
+            return False
     # 연결된 정점이 없거나 or 더 이상 검사할 정점없이 지나갔을 떼 
-    return False
+    return True
 
 case = 1 # input case count
 while True:
     n, m = map(int, input().split())
-
-    # TERMINAL CONDITION 
-    if n == 0 and m == 0:
-        break 
 
     # Data DS 
     mat = [[] for _ in range(n+1)]
@@ -44,8 +37,9 @@ while True:
     count = 0
     
     parent = [0] * (n+1)
-
-
+    # TERMINAL CONDITION 
+    if n == 0 and m == 0:
+        break 
 
     # 양방향 매핑
     for _ in range(m):
@@ -61,7 +55,9 @@ while True:
             # 아직 방문하지 않은 점이라면, 부모노드 설정
             parent[i] = i
             visited[i] = 1
-            if not findCycle_dfs(i):
+
+            # 트리라면(=사이클이 없으면), count추가 
+            if findCycle_dfs(i):
                 count += 1
 
     if count == 0:
