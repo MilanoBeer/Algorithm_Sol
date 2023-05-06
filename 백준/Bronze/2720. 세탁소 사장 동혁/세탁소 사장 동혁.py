@@ -7,6 +7,9 @@
 
 # output: 0.25 / 0.10 / 0.05 / 0.01dml rottn 
 
+import sys
+input = sys.stdin.readline
+
 T = int(input())
 
 for t in range(T):
