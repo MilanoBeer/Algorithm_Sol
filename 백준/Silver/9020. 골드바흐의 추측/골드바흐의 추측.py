@@ -1,12 +1,15 @@
 # 2초 / 256MB
 # 23.05.18
-# 15:33 ~ 15: 45 / 16:00 ~ 
+# 15:33 ~ 15: 45 / 16:00 ~ 16:41 / 
 # 소수 / 5 -> 1, 5
 # 골드바흐수 정의 
     # 2보다 큰 모든 짝수 <- 두 소수의 합
 # 골드바흐 파티션
-#input
-T = int(input()) # 
+
+import sys
+input = sys.stdin.readline
+
+T = int(input()) #
 
 def check(num):
     for i in range(2, num//2 + 1):  # num//2까지 검사
