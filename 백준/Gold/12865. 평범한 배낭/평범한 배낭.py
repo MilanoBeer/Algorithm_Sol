@@ -30,9 +30,12 @@ for i in range(1, N+1):
         if j < weight:
             dp[i][j] = dp[i-1][j]
         else:
-            # 
             dp[i][j] = max(dp[i-1][j], dp[i-1][j-weight] + price)
-
+            # 이번row에서 추가할 물건의 w, v
+            # 이번물건을 추가하지 않는거랑 
+            # 이전까지 상태에서 현재 weight값만큼 뺐을 때의 가치 
+                # 현재 weight값은 고정이니까, 
+                # j값이 증가함에 따라, 비교되는 j-weight값이 달라진다 
 
 # for line in dp:
 #     print(line)
