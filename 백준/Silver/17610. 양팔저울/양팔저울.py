@@ -1,47 +1,29 @@
-# 23.08.26 / 18:21 ~ 
+# 23.08.26 / 18:21 ~ 18:57 -> pypy3는 통과, python은 시초.. / 
 
 from itertools import combinations
 import sys
 def input():
     return sys.stdin.readline().rstrip()
 
-cnt = 0
-
 k = int(input())
 weights = list(map(int, input().split()))
 tot = sum(weights)
-
-# Solution >>> 
-# 1. 완탐
-    # {1, 2, 6 }
-    # {1 + 2 / 1 + 6 / 2 + 6} -> combinations
-    # { 1+ 2 + 6}
-
-checked = [0] * (tot + 1) 
+checked = [0] * (tot+1)
 checked[0] = 1
 
-# for i to k개 뽑기
-_list = []
-for i in range(1, k+1):
-    for case in combinations(weights, i):
-        tmp = sum(case)
-        checked[tmp] = 1
-        _list.append(tmp)
-_list.sort(reverse=True)
+# Solution >> DFS 
+# 하나 더 뽑아서 더하거나
+# 안 뽑거나
+# 하나 더 뽑아서 기존값에서 빼거나 
 
-for i in range(len(_list)):
-    for j in range(i+1, len(_list)):
-        idx = abs(_list[i] - _list[j])
-        # _list.append(idx)
-        if checked[idx] == 0:
-            checked[idx] = 1
-
-print(checked.count(0))
-
-
-
+def dfs(cnt, val):
+    if cnt == k:
+        checked[val] = 1
+        return 
+        
+    dfs(cnt + 1, val + weights[cnt])
+    dfs(cnt + 1, val)
+    dfs(cnt + 1, abs(val - weights[cnt]))
     
-
-
-
-# output : 불가능한 경우의 수 갯수 
+dfs(0, 0)
+print(checked.count(0))
