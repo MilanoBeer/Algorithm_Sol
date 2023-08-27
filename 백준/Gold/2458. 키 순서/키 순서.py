@@ -17,10 +17,7 @@ dist = [[0] * (N+1) for _ in range(N+1)]
 # init dist
 for i in range(1, N+1):
     for j in range(1, N+1):
-        if i == j: dist[i][j] = 0
-        else:
-            if mat[i][j] != 0:
-                dist[i][j] = 1
+        dist[i][j] = mat[i][j] 
 
 # Proccess
 for k in range(1, N+1):
