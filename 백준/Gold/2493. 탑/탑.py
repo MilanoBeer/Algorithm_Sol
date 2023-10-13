@@ -11,7 +11,7 @@ for i in range(len(_list)):
         stack.append((_list[i], i))
     else:
         # i원소보다 더 큰 top을 만날때까지 pop
-        while stack and stack[-1][0] < _list[i]:
+        while stack and stack[-1][0] < _list[i]: # *** ERROR : 부등호 방향
             stack.pop()
         if stack:
             _ans[i] = stack[-1][1] + 1
