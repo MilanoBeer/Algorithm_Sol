@@ -1,24 +1,21 @@
-# 14:39 ~
-# 생각하기..
-    # 완탐? -> 
-    # 그리디?
-from collections import deque
-import sys
+# 23.10.13 / 16:40 ~ 
 
-data = list(input())
-start = 0
-idx = 0
-# data의 모든 숫자를 처리할 때 까지
-while idx < len(data):
-    # start를 1씩 증가시키기
-    start += 1
-    temp = str(start)
+_list = list(map(int, input()))
+val = 1
+i = 0
 
-    # 증가시킨 start에서, data의 숫자들이 있는지 하나씩 확인하기
-    for i in range(len(temp)):
-        # 일치하는게 있으면 -> data의 포인터 앞으로
-        if temp[i] == data[idx]:
-            idx += 1
-        if idx == len(data):
-            break 
-print(start)
+while i < len(_list):
+    # 현재 _list[i]에 val가 포함되어 있지 않으면
+    if str(_list[i]) not in str(val):
+        val += 1
+    else: # 포함되어 있으면 
+        # 
+        for j in str(val):
+            if i >= len(_list):
+                break
+            # print("j:", j, "i :", i)
+            if j == str(_list[i]): i += 1
+            # else: break
+        val += 1
+    # print()
+print(val - 1)
