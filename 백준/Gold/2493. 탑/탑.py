@@ -1,20 +1,18 @@
-# 23.10.13 / 15:01 ~ 
 
 N = int(input())
-_list = list(map(int, input().split()))
+_data = list(map(int, input().split()))
 
-stack = []
-_ans = [0] * (N)
+st = []
+ans = [0] * (N)
+for i in range(N-1, -1, -1):
+    e = _data[i]
+    while st and st[-1][0] <= e:
+        v, idx = st.pop()
+        ans[idx] = i + 1
+    st.append((e, i))
 
-for i in range(len(_list)):
-    if not stack:
-        stack.append((_list[i], i))
-    else:
-        # i원소보다 더 큰 top을 만날때까지 pop
-        while stack and stack[-1][0] < _list[i]: # *** ERROR : 부등호 방향
-            stack.pop()
-        if stack:
-            _ans[i] = stack[-1][1] + 1
-        stack.append((_list[i], i))
+while st:
+    v, idx = st.pop()
+    ans[idx] = 0
 
-print(*_ans)
+print(*ans)
