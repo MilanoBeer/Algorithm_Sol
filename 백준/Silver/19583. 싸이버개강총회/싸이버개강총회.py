@@ -28,7 +28,7 @@ while True:
         if time <= S:
             dd[nick] = 1
 
-        elif E <= time <= Q and dd[nick] == 1:
+        if E <= time <= Q and dd[nick] == 1:
             dd[nick] += 1
             ans += 1
     except:
