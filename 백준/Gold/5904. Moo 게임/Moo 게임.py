@@ -1,35 +1,42 @@
+
 N = int(input())
 
-# 현재 총 길이, 가운데 길이, 구하려는 순서
-def recursive(total_length, mid_length, N):
-    if N <= 3:
-        return "moo"[N-1]
+init = ['m', 'o', 'o']
+tot = 3
+n = 0
 
-    # 왼쪽 수열 길이 = 가운데를 제외한 반
-    left_length = (total_length - mid_length) // 2
-
-    # 찾으려는 순서가 왼쪽 수열에 있으면 -> 그 전 수열로 ㄱ
-    if N <= left_length:
-        return recursive(left_length, mid_length - 1, N)
-
-    # 찾으려는 순서가 오른쪽 수열에 있으면 -> 왼쪽 수열의 순서로 바꾸고 그 전 수열로 ㄱ
-    if N > left_length + mid_length:
-        return recursive(left_length, mid_length - 1, N - left_length - mid_length)
-
-    # 찾으려는 순서가 가운데에 위치할 때
-    # 찾으려는 순서가 가운데의 첫번째면 m, 아니면 o
-    if N - left_length == 1:
-        return "m"
-    else:
-        return "o"
-
-
-total_length = 3  # 처음에는 moo 세글자
-n = 0  # 몇번째 수열인지 -> 가운데 길이 구하기 위함
-while total_length < N:
-    # 기존 수열 * 2 + o 개수 + m 개수
+while tot < N: # 아직 작을동안 증가시키기
     n += 1
-    total_length = 2 * total_length + n + 3
+    tot = 2 * tot + n + 3
 
-# 가운데 길이 = 수열 순서 + 3
-print(recursive(total_length, n+3, N))
+# 수열의 총 갯수가 N이상이 됨 -> 탐색가능해짐
+def dnc(tot, idx, target):
+    global init
+
+    # print(tot, idx, target)
+    
+    # terminal condition 
+    if tot <= 3:
+        # print("terminal")
+        # print(init[target-1])
+        return init[target-1]
+
+    # 영역 나누기 : 왼쪽 / 가운데 / 오른쪽
+    prev = (tot - (idx + 3)) // 2
+
+    # 왼쪽인가
+    if target <= prev:
+        return dnc(prev, idx - 1, target)
+
+    # 오른쪽인가
+    elif target > tot - prev:
+        return dnc(prev, idx - 1, target - (tot - prev))
+
+    # 가운데인가
+    if target - prev == 1:
+        return 'm'
+    else:
+        return 'o'
+
+
+print(dnc(tot, n, N))
