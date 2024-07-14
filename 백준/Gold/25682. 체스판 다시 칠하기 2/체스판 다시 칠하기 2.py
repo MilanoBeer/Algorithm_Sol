@@ -8,7 +8,7 @@ mat = [list(input()) for _ in range(N)]
 
 _pre = [[0] * (M+1) for _ in range(N+1)]
 
-
+# 시작부분이 B일떄 기준으로 
 for i in range(1, N + 1):
     for j in range(1, M + 1):
         if (i + j) % 2 == 0:
@@ -28,5 +28,5 @@ for r in range(K, N + 1):
     for c in range(K, M + 1):
         max_ = max(_pre[r][c] - _pre[r-K][c] - _pre[r][c-K] + _pre[r-K][c-K], max_)
         min_ = min(_pre[r][c] - _pre[r-K][c] - _pre[r][c-K] + _pre[r-K][c-K], min_)
-
-print(min(max_, min_, K*K - min_, K*K - max_))
+# print(min(max_, min_, K*K - min_, K*K - max_))
+print(min(min_, K*K - max_))
