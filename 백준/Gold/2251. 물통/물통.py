@@ -1,65 +1,54 @@
 from collections import deque
-from unittest import result
 
-# 첫번째 물통이 비어 있을 때, 세번재 물통에 담겨있을 수 있는 물의 양을 '모두' 구하기
-
+# ?: 주고받는게 끝나는 시점..? 
 A, B, C = map(int, input().split())
+_ans = []
+dq = deque()
+dq.append((0, 0))
+visited = [[0] * 201 for _ in range(201)]
+visited[0][0] = 1
+# queue에서 관리하는 원소 
 
-# 방문처리
-visited = [[False] * ( B+1) for _ in range(A+1)]
+def check(a, b):
+    if visited[a][b] == 0:
+        visited[a][b] = 1
+        dq.append((a, b))
 
-result_list = []
-c_list = [-1] * (C+1)
-queue = deque()
+def bfs():
+    while dq:
 
-def pour(x, y):
-    # 이미 계산했던 경우가 아니라면
-    if visited[x][y] == False:
-        visited[x][y] = True
-        queue.append([x, y])
+        a, b = dq.popleft()
+        c = C - a - b
 
-def bfs(a, b):
-    queue.append([a, b])
+        if a == 0:
+            _ans.append(c)
 
-    while queue:
-        x, y= queue.popleft()
-        z = C - x - y 
+        # 물 이동
+        # a - > b
+        w = min(a, B - b)
+        check(a - w, b + w)
 
-        # 매번 A물통이 비어있는지 검사 
-        if x == 0:
-            result_list.append(z) 
-
-        # x -> y
-        # 부을 양 정하기 : 다 붓거나, 다른 병이 다 채워질때까지 붓거나 
-        water = min(x, B - y)
-        pour(x - water, y + water)
-        # x -> z
-        water = min(x, C - z)
-        pour(x - water, y)
-
-        # y -> z
-        water = min(y, C - z)
-        pour(x, y - water)
-        # y -> x
-        water = min(y, A - x)
-        pour(x + water, y - water)
-
-        # z -> x
-        water = min(z, A -x)
-        pour(x + water, y)
-        # z -> y
-        water = min(z, B - y)
-        pour(x, y + water)
-
-bfs(0, 0)
-result_list = list(set(result_list))
-result_list.sort() 
-
-for i in result_list:
-    print(i, end=' ')
-
-        
-
-            
+        # a -> c
+        w = min(a, C - c)
+        check(a - w, b)
 
 
+        # b -> a
+        w = min(b, A - a)
+        check(a + w, b - w)
+
+        # b -> c
+        w = min(b, C - c)
+        check(a, b - w)
+
+        # c - > a
+        w = min(c, A - a)
+        check(a + w, b)
+
+        # c -> b
+        w = min(c, B - b)
+        check(a, b + w)
+
+bfs()
+_ans.sort()
+print(*_ans)
